@@ -2,18 +2,17 @@ package io.jenkins.plugins.trigger;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.io.InputStream;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 public class HttpRequest {
-    final static String URL = "https://jsonplaceholder.typicode.com/posts";
-    
+    static final String URL = "https://jsonplaceholder.typicode.com/posts";
+
     public static JsonNode getJsonResponse() {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet httpGet = new HttpGet(URL);

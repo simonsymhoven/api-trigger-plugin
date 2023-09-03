@@ -8,9 +8,8 @@ public class AllTriggers {
     public static final AllTriggers INSTANCE = new AllTriggers();
     private final List<ApiTrigger> triggerList = new CopyOnWriteArrayList<>();
 
-    private AllTriggers() {
-    }
-    
+    private AllTriggers() {}
+
     public void add(ApiTrigger trigger) {
         triggerList.add(trigger);
     }
@@ -22,5 +21,4 @@ public class AllTriggers {
     public List<ApiTrigger> getAll() {
         return triggerList;
     }
-
 }

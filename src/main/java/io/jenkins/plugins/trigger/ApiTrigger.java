@@ -7,28 +7,23 @@ import hudson.model.*;
 import hudson.triggers.Trigger;
 import hudson.triggers.TriggerDescriptor;
 import io.jenkins.cli.shaded.org.apache.commons.lang.StringUtils;
-import jenkins.model.Jenkins;
+import java.util.HashMap;
+import java.util.Map;
 import jenkins.model.ParameterizedJobMixIn;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
 
-import java.util.HashMap;
-import java.util.Map;
-
-
 public class ApiTrigger extends Trigger<Job<?, ?>> {
-    
+
     @DataBoundConstructor
-    public ApiTrigger() {
-        
-    }
-    
+    public ApiTrigger() {}
+
     @Override
     public void start(Job<?, ?> project, boolean newInstance) {
         super.start(project, newInstance);
         AllTriggers.INSTANCE.add(this);
     }
-    
+
     @Override
     public void stop() {
         AllTriggers.INSTANCE.remove(this);
@@ -50,13 +45,11 @@ public class ApiTrigger extends Trigger<Job<?, ?>> {
             params.put("Title", test.get("title").asText());
             params.put("Body", test.get("body").asText());
 
-            ParameterizedJobMixIn.scheduleBuild2(job, 0,
-                    new CauseAction(new ApiTriggerCause()), new ApiTriggerAction(params));
+            ParameterizedJobMixIn.scheduleBuild2(
+                    job, 0, new CauseAction(new ApiTriggerCause()), new ApiTriggerAction(params));
         }
-        
-        
     }
-    
+
     @Extension
     @Symbol("api")
     public static class DescriptorImpl extends TriggerDescriptor {
@@ -64,7 +57,7 @@ public class ApiTrigger extends Trigger<Job<?, ?>> {
         public boolean isApplicable(Item item) {
             return false;
         }
-        
+
         @NonNull
         @Override
         public String getDisplayName() {
@@ -87,7 +80,5 @@ public class ApiTrigger extends Trigger<Job<?, ?>> {
         public int hashCode() {
             return 5;
         }
-        
-        
     }
 }
